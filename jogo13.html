@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>superlimon</title>
+    <link rel="shortcut icon" href="favicon-16x16.png" type="image/x-icon">
+    <link rel="stylesheet" href="style13.css">
+    <style>
+        img{
+      user-select: none;
+    }
+    .block:hover, #block:hover{
+        background-color: darkorange;
+    }
+    </style>
+</head>
+<body>
+    <div style="display: flex; justify-content: center; align-items: center;">
+        <div id="container">
+            <img id="player" src="playerB.png" alt="Player" ondragstart="return false">
+            <div id="block" class="block respawn" style="top: 100px; left: 100px;"></div>
+            <div id="block" class="block respawn" style="top: 200px; left: 300px;"></div>
+            <div id="block" class="block respawn" style="bottom: 100px; right: 300px;"></div>
+            <div id="block" class="block respawn" style="bottom: 0; right: 200px;"></div>
+            <div id="block" class="block respawn" style="bottom: 0; right: 300px;"></div>
+            <div id="block" class="block respawn" style="bottom: 100px; left: 100px;"></div>
+            <div id="block" class="block respawn" style="bottom: 0; left: 50px;"></div>
+            <div id="block" class="block respawn" style="top: 0; right: 100px;"></div>
+            <div id="block" class="block respawn" style="top: 0; right: 200px;"></div>
+            <div id="block" class="block respawn" style="top: 150px; right: 200px;"></div>
+            <div id="block" class="block respawn" style="top: 250px; right: 100px;"></div>
+            <div id="block" class="block respawn" style="top: 100px; right: 100px;"></div>
+            <div id="block" class="block respawn" style="top: 100px; right: 150px;"></div>
+            <div id="block" class="block respawn" style="top: 100px; right: 50px;"></div>
+            <div id="block" class="block respawn" style="top: 100px; right: 0px;"></div>
+            <div class="block" style="top: 250px; right: 350px;"></div>
+            <div id="restartBlock" class="block" style="bottom: 200px; right: 200px; background-color: rgb(255, 0, 0)(0, 0, 0);"></div>
+            <div id="specialBlock" class="block" style="top: 91.9%; left: 93.6%;"></div> <!-- Bloco especial que redireciona para fim.html -->
+        </div>
+        <div class="controls">
+            <button id="up">↑</button>
+            <div class="control-row">
+                <button id="left">←</button>
+                <button id="down">↓</button>
+                <button id="right">→</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const player = document.getElementById('player');
+        const container = document.getElementById('container');
+        const blocks = document.querySelectorAll('.block');
+        const endBlock = document.getElementById('endBlock');
+        const specialBlock = document.getElementById('specialBlock');
+        const step = 5; // Número de pixels a mover por intervalo
+        const interval = 10; // Tempo de intervalo em milissegundos
+
+        let keysPressed = {};
+        let moveInterval = null;
+
+        const checkCollisionWithEndBlock = () => {
+            const playerRect = player.getBoundingClientRect();
+            const endBlockRect = endBlock.getBoundingClientRect();
+
+            return !(
+                playerRect.top > endBlockRect.bottom ||
+                playerRect.bottom < endBlockRect.top ||
+                playerRect.left > endBlockRect.right ||
+                playerRect.right < endBlockRect.left
+            );
+        };
+
+        const isColliding = (rect1, rect2) => {
+            return !(
+                rect1.top > rect2.bottom ||
+                rect1.bottom < rect2.top ||
+                rect1.left > rect2.right ||
+                rect1.right < rect2.left
+            );
+        };
+
+        const checkCollision = (rect1, rect2) => {
+            return !(
+                rect1.top > rect2.bottom ||
+                rect1.bottom < rect2.top ||
+                rect1.left > rect2.right ||
+                rect1.right < rect2.left
+            );
+        };
+
+        const movePlayer = () => {
+            let top = parseInt(player.style.top) || 0;
+            let left = parseInt(player.style.left) || 0;
+
+            let newTop = top;
+            let newLeft = left;
+
+            // Calcular a nova posição do jogador
+            if (keysPressed['w'] || keysPressed['W'] || keysPressed['ArrowUp']) {
+                newTop = Math.max(newTop - step, 0);
+            }
+            if (keysPressed['a'] || keysPressed['A'] || keysPressed['ArrowLeft']) {
+                newLeft = Math.max(newLeft - step, 0);
+            }
+            if (keysPressed['s'] || keysPressed['S'] || keysPressed['ArrowDown']) {
+                newTop = Math.min(newTop + step, container.clientHeight - player.clientHeight);
+            }
+            if (keysPressed['d'] || keysPressed['D'] || keysPressed['ArrowRight']) {
+                newLeft = Math.min(newLeft + step, container.clientWidth - player.clientWidth);
+            }
+
+            // Temporariamente mover o jogador para a nova posição
+            player.style.top = newTop + 'px';
+            player.style.left = newLeft + 'px';
+
+            // Verificar colisão com blocos
+            let collision = false;
+            blocks.forEach(block => {
+                const blockRect = block.getBoundingClientRect();
+                const playerRect = player.getBoundingClientRect();
+
+                if (block.classList.contains('respawn')) {
+                    // Bloco de respawn
+                    if (checkCollision(playerRect, blockRect)) {
+                        window.location.reload(); // Reinicia a página
+                    }
+                } else if (block.id === 'specialBlock') {
+                    // Bloco especial que redireciona para fim.html
+                    if (checkCollision(playerRect, blockRect)) {
+                        window.location.href = "fim.html";
+                    }
+                } else {
+                    // Outros blocos
+                    if (checkCollision(playerRect, blockRect)) {
+                        collision = true;
+                        if (keysPressed['w'] || keysPressed['W'] || keysPressed['ArrowUp']) {
+                            newTop = blockRect.bottom;
+                        }
+                        if (keysPressed['a'] || keysPressed['A'] || keysPressed['ArrowLeft']) {
+                            newLeft = blockRect.right;
+                        }
+                        if (keysPressed['s'] || keysPressed['S'] || keysPressed['ArrowDown']) {
+                            newTop = blockRect.top - player.clientHeight;
+                        }
+                        if (keysPressed['d'] || keysPressed['D'] || keysPressed['ArrowRight']) {
+                            newLeft = blockRect.left - player.clientWidth;
+                        }
+                    }
+                }
+            });
+
+            // Reverter a posição do jogador se houver colisão
+            if (collision) {
+                player.style.top = top + 'px';
+                player.style.left = left + 'px';
+            } else {
+                player.style.top = newTop + 'px';
+                player.style.left = newLeft + 'px';
+            }
+        };
+
+        const startMoving = () => {
+            if (!moveInterval) {
+                moveInterval = setInterval(movePlayer, interval);
+            }
+        };
+
+        const stopMoving = () => {
+            clearInterval(moveInterval);
+            moveInterval = null;
+        };
+
+        document.addEventListener('keydown', (event) => {
+            keysPressed[event.key] = true;
+            startMoving();
+        });
+
+        document.addEventListener('keyup', (event) => {
+            delete keysPressed[event.key];
+            if (Object.keys(keysPressed).length === 0) {
+                stopMoving();
+            }
+        });
+
+        const addMobileControls = (buttonId, key) => {
+            const button = document.getElementById(buttonId);
+            button.addEventListener('mousedown', () => {
+                keysPressed[key] = true;
+                startMoving();
+            });
+            button.addEventListener('mouseup', () => {
+                delete keysPressed[key];
+                if (Object.keys(keysPressed).length === 0) {
+                    stopMoving();
+                }
+            });
+            button.addEventListener('touchstart', (event) => {
+                event.preventDefault(); // Prevenir comportamento padrão do toque
+                keysPressed[key] = true;
+                startMoving();
+            });
+            button.addEventListener('touchend', (event) => {
+                event.preventDefault(); // Prevenir comportamento padrão do toque
+                delete keysPressed[key];
+                if (Object.keys(keysPressed).length === 0) {
+                    stopMoving();
+                }
+            });
+        };
+
+        addMobileControls('up', 'ArrowUp');
+        addMobileControls('down', 'ArrowDown');
+        addMobileControls('left', 'ArrowLeft');
+        addMobileControls('right', 'ArrowRight');
+    </script>
+    <footer>&copy; Feito por Thiago bel</footer>
+    <script type="module" src="script.js"></script>
+    <script type="module" src="NOMOBILE.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>superlimon</title>
+    <link rel="shortcut icon" href="favicon-16x16.png" type="image/x-icon">
+    <link rel="stylesheet" href="style9.css">
+    <style>
+        #container {
+            background-color: rgb(56, 56, 56);
+            position: relative;
+            width: 400px; /* Definindo a largura do contêiner */
+            height: 400px; /* Definindo a altura do contêiner */
+            margin: 0 auto; /* Centralizar horizontalmente */
+            overflow: hidden; /* Esconder overflow */
+        }
+        img {
+            user-select: none;
+            position: absolute;
+        }
+        #lua {
+            background-color: rgba(255, 0, 0, 0);
+            background-image: url(blocoespacial.png);
+            background-repeat: no-repeat;
+            background-size: cover;
+            position: absolute;
+            width:  5vmin;
+            height: 5vmin;
+            z-index: 3;
+        }
+        #sol {
+            background-color: rgba(255, 0, 0, 0);
+            background-image: url(bloco2espacial.png);
+            background-repeat: no-repeat;
+            background-size: cover;
+            position: absolute;
+            width: 10.25vmin;
+            height: 10.25vmin;
+            top: 30%; /* Ajustando a posição inicial do sol */
+            left: 30%; /* Ajustando a posição inicial do sol */
+            transform: translate(-50%, -50%);
+            z-index: 4;
+        }
+        #satelite {
+            background-color: rgba(255, 0, 0, 0);
+            background-image: url(bloco3espacial.png);
+            background-repeat: no-repeat;
+            background-size: cover;
+            position: absolute;
+            width:  2.5vmin; /* Tamanho do satélite */
+            height: 2.5vmin; /* Tamanho do satélite */
+            z-index: 5;
+        }
+        .block {
+            background-color: rgba(0, 0, 0, 0);
+            position: absolute;
+        }
+        #bloco{
+            background-color: rgb(0, 0, 0);
+        }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <div id="container">
+            <img id="player" src="playerBespacial.png" alt="Player" ondragstart="return false;">
+            <div class="block" id="satelite" style="top: 15%; left: 15%;"></div>
+            <div class="block" id="sol" style="top: 50%; left: 50%;"></div>
+            <div class="block" id="lua"></div>
+            <div class="block" id="bloco" style="top: 10%; left: 50%;"></div>
+            <div class="block" id="bloco" style="top: 20%; left: 10%;"></div>
+            <div class="block" id="bloco" style="top: 50%; left: 12%;"></div>
+            <div class="block" id="bloco" style="top: 50%; left: 24%;"></div>
+            <div class="block" id="bloco" style="top: 80%; left: 0%;"></div>
+            <div class="block" id="bloco" style="top: 75%; left: 10%;"></div>
+            <div class="block" id="bloco" style="top: 5%; left: 10%;"></div>
+            <div class="block" id="bloco" style="top: 5%; left: 30%;"></div>
+            <div class="block" id="bloco" style="top: 90%; left: 70%;"></div>
+            <div class="block" id="bloco" style="top: 70%; left: 90%;"></div>
+            <div id="endBlock"></div>
+            <!-- Adicione mais blocos conforme necessário -->
+        </div>
+        <div class="controls">
+            <button id="up">↑</button>
+            <div class="control-row">
+                <button id="left">←</button>
+                <button id="down">↓</button>
+                <button id="right">→</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const player = document.getElementById('player');
+        const container = document.getElementById('container');
+        const blocks = document.querySelectorAll('.block');
+        const endBlock = document.getElementById('endBlock');
+        const step = 5; // Número de pixels a mover por intervalo
+        const interval = 10; // Tempo de intervalo em milissegundos
+        const minDistance = 50; // Distância mínima dos blocos
+
+        let keysPressed = {};
+        let moveInterval = null;
+
+        const checkCollisionWithEndBlock = () => {
+            const playerRect = player.getBoundingClientRect();
+            const endBlockRect = endBlock.getBoundingClientRect();
+
+            return !(
+                playerRect.top > endBlockRect.bottom ||
+                playerRect.bottom < endBlockRect.top ||
+                playerRect.left > endBlockRect.right ||
+                playerRect.right < endBlockRect.left
+            );
+        };
+
+        const isColliding = (rect1, rect2) => {
+            return !(
+                rect1.top > rect2.bottom ||
+                rect1.bottom < rect2.top ||
+                rect1.left > rect2.right ||
+                rect1.right < rect2.left
+            );
+        };
+
+        const movePlayer = () => {
+            let top = parseInt(player.style.top) || 0;
+            let left = parseInt(player.style.left) || 0;
+
+            let newTop = top;
+            let newLeft = left;
+
+            // Calcular a nova posição do jogador
+            if (keysPressed['w'] || keysPressed['W'] || keysPressed['ArrowUp']) {
+                newTop = Math.max(newTop - step, 0);
+            }
+            if (keysPressed['a'] || keysPressed['A'] || keysPressed['ArrowLeft']) {
+                newLeft = Math.max(newLeft - step, 0);
+            }
+            if (keysPressed['s'] || keysPressed['S'] || keysPressed['ArrowDown']) {
+                newTop = Math.min(newTop + step, container.clientHeight - player.clientHeight);
+            }
+            if (keysPressed['d'] || keysPressed['D'] || keysPressed['ArrowRight']) {
+                newLeft = Math.min(newLeft + step, container.clientWidth - player.clientWidth);
+            }
+
+            // Temporariamente mover o jogador para a nova posição
+            player.style.top = newTop + 'px';
+            player.style.left = newLeft + 'px';
+
+            // Verificar colisão com blocos
+            let collision = false;
+            blocks.forEach(block => {
+                const blockRect = block.getBoundingClientRect();
+                const playerRect = player.getBoundingClientRect();
+
+                if (isColliding(playerRect, blockRect)) {
+                    collision = true;
+                    if (keysPressed['w'] || keysPressed['W'] || keysPressed['ArrowUp']) {
+                        newTop = blockRect.bottom;
+                    }
+                    if (keysPressed['a'] || keysPressed['A'] || keysPressed['ArrowLeft']) {
+                        newLeft = blockRect.right;
+                    }
+                    if (keysPressed['s'] || keysPressed['S'] || keysPressed['ArrowDown']) {
+                        newTop = blockRect.top - player.clientHeight;
+                    }
+                    if (keysPressed['d'] || keysPressed['D'] || keysPressed['ArrowRight']) {
+                        newLeft = blockRect.left - player.clientWidth;
+                    }
+                }
+            });
+
+            // Reverter a posição do jogador se houver colisão
+            if (collision) {
+                player.style.top = top + 'px';
+                player.style.left = left + 'px';
+            } else {
+                player.style.top = newTop + 'px';
+                player.style.left = newLeft + 'px';
+            }
+
+            // Verificar colisão com o bloco final
+            if (checkCollisionWithEndBlock()) {
+                window.location.href = "fim.html";
+            }
+        };
+
+        const startMoving = () => {
+            if (!moveInterval) {
+                moveInterval = setInterval(movePlayer, interval);
+            }
+        };
+
+        const stopMoving = () => {
+            clearInterval(moveInterval);
+            moveInterval = null;
+        };
+
+        document.addEventListener('keydown', (event) => {
+            keysPressed[event.key] = true;
+            startMoving();
+        });
+
+        document.addEventListener('keyup', (event) => {
+            delete keysPressed[event.key];
+            if (Object.keys(keysPressed).length === 0) {
+                stopMoving();
+            }
+        });
+
+        const addMobileControls = (buttonId, key) => {
+            const button = document.getElementById(buttonId);
+            button.addEventListener('mousedown', () => {
+                keysPressed[key] = true;
+                startMoving();
+            });
+            button.addEventListener('mouseup', () => {
+                delete keysPressed[key];
+                if (Object.keys(keysPressed).length === 0) {
+                    stopMoving();
+                }
+            });
+            button.addEventListener('touchstart', (event) => {
+                event.preventDefault(); // Prevenir comportamento padrão do toque
+                keysPressed[key] = true;
+                startMoving();
+            });
+            button.addEventListener('touchend', (event) => {
+                event.preventDefault(); // Prevenir comportamento padrão do toque
+                delete keysPressed[key];
+                if (Object.keys(keysPressed).length === 0) {
+                    stopMoving();
+                }
+            });
+        };
+
+        addMobileControls('up', 'ArrowUp');
+        addMobileControls('down', 'ArrowDown');
+        addMobileControls('left', 'ArrowLeft');
+        addMobileControls('right', 'ArrowRight');
+
+        // Movimento orbital do #lua
+        const lua = document.getElementById('lua');
+        const sol = document.getElementById('sol');
+        const orbitRadiusLua = 100; // Aumentando o raio da órbita da lua em pixels
+        const orbitSpeedLua = 0.01; // Velocidade da órbita da lua (maior é mais rápido)
+        let angleLua = 0;
+
+        const updateLuaPosition = () => {
+            const solRect = sol.getBoundingClientRect();
+            const containerRect = container.getBoundingClientRect();
+            const solCenterX = solRect.left + solRect.width / 2 - containerRect.left;
+            const solCenterY = solRect.top + solRect.height / 2 - containerRect.top;
+
+            const luaX = solCenterX + orbitRadiusLua * Math.cos(angleLua) - lua.clientWidth / 2;
+            const luaY = solCenterY + orbitRadiusLua * Math.sin(angleLua) - lua.clientHeight / 2;
+
+            lua.style.left = `${luaX}px`;
+            lua.style.top = `${luaY}px`;
+
+            angleLua += orbitSpeedLua;
+            requestAnimationFrame(updateLuaPosition);
+        };
+
+        updateLuaPosition();
+
+        // Movimento orbital do #satelite em torno da #lua
+        const satelite = document.getElementById('satelite');
+        const orbitRadiusSatelite = 50; // Aumentando o raio da órbita do satélite em pixels
+        const orbitSpeedSatelite = 0.03; // Velocidade da órbita do satélite (maior é mais rápido)
+        let angleSatelite = 0;
+
+        const updateSatelitePosition = () => {
+            const luaRect = lua.getBoundingClientRect();
+            const containerRect = container.getBoundingClientRect();
+            const luaCenterX = luaRect.left + luaRect.width / 2 - containerRect.left;
+            const luaCenterY = luaRect.top + luaRect.height / 2 - containerRect.top;
+
+            const sateliteX = luaCenterX + orbitRadiusSatelite * Math.cos(angleSatelite) - satelite.clientWidth / 2;
+            const sateliteY = luaCenterY + orbitRadiusSatelite * Math.sin(angleSatelite) - satelite.clientHeight / 2;
+
+            satelite.style.left = `${sateliteX}px`;
+            satelite.style.top = `${sateliteY}px`;
+
+            angleSatelite += orbitSpeedSatelite;
+            requestAnimationFrame(updateSatelitePosition);
+        };
+
+        updateSatelitePosition();
+    </script>
+    <footer>&copy; Feito por Thiago bel</footer>
+    <script type="module" src="script.js"></script>
+    <script type="module" src="NOMOBILE.js"></script>
+</body>
+</html>

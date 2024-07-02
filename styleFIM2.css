@@ -1,0 +1,60 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+    background-color: black;
+}
+.parte{
+    text-decoration: none;
+}
+input{
+    background-color: yellow;
+    color: black;
+    transition: transform 0.2s ease-in-out;
+    border: 0;
+    font-size: 10vh;
+    border-radius: 10px;
+}
+input:hover{
+    background-color: rgb(196, 196, 0);
+    transform: translateY(-0.5vh);
+    cursor: pointer;
+}
+input:active{
+    background-color: yellowgreen;
+    cursor: wait;
+}
+.partee:hover{
+    cursor: pointer;
+}
+.partee:active{
+    cursor: wait;
+}
+.sims, .sims2{
+    display: flex;
+    justify-content: space-around;
+}
+@media (max-width: 1300px){
+    input{
+        font-size: 300%;
+    }
+}
+@media (max-width: 1000px){
+    input{
+        font-size: 100%;
+    }
+}
+footer{
+    text-align: center;
+}
+a{
+    text-decoration: none;
+}
+.secreto{
+    background-color: brown;
+}
+.secreto:HOVER{
+    background-color: black;
+}

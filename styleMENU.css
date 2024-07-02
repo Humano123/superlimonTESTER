@@ -1,0 +1,115 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  body{
+    background-color: blueviolet;
+  }
+  nav{
+    background-color: black;
+  }
+  .log{
+    color: aliceblue;
+    font-size: 10vh;
+    user-select: none;
+  }
+  .sima{
+    display: flex;
+    align-content: space-around;
+  }
+  .sim{
+    text-align: center;
+  }
+  .dosim{
+    color: aquamarine;
+  }
+  .p{
+    color: aliceblue;
+  }
+  button:hover{
+    text-decoration: underline;
+  }
+  .input{
+    background-color: rgb(216, 0, 137);
+    border-color: rgb(255, 255, 255);
+    border-radius: 13vh;
+    transition: transform 0.1s ease-in-out;
+    display: flex;
+    font-size: 500%;
+    margin: auto;
+    margin-top: 20vh;
+    padding-left: 10vh;
+    padding-right: 10vh;
+    user-select: none;
+  }
+  button{
+    user-select: none;
+  }
+  .input:hover{
+    background-color: rgb(157, 0, 78);
+    transform: translateY(-6px);
+    cursor: pointer;
+    text-decoration: underline;
+  }
+  .input:active{
+    transform: scale(0.6);
+  }
+  a{
+    text-decoration: none;
+  }
+  .simaall{
+    display: flex;
+    justify-content: space-around;
+  }
+  .ajuda{
+    background-color: rgb(255, 0, 0);
+    color: aliceblue;
+    border: 0;
+    transition: transform 0.3s ease-in-out;
+  }
+  .ajuda:hover{
+    background-color: rgb(108, 0, 0);
+    cursor: help;
+  }
+  .ajuda:active{
+    transform: scale(0.5);
+  }
+  .avisu{
+    color: brown;
+    display: none;
+    font-size: 200%;
+  }
+  @media (max-width: 1300px){
+    .input{
+      font-size: 300%;
+    }
+    .avisu{
+      display: block;
+    }
+  }
+  @media (max-width: 1000px){
+    .input{
+      font-size: 200%;
+    }
+  }
+  footer{
+    text-align: center;
+  }
+  .div{
+    background-color: azure;
+    border-radius: 5px;
+  }
+  .pz{
+    color: brown;
+  }
+  .b{
+    color: blue;
+  }
+  .acd{
+    color: aliceblue;
+  }
+  .acd2{
+    background-color: red;
+  }
+  

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>superlimon DEV</title>
+    <style>
+        #container {
+            display: grid;
+            grid-template-columns: repeat(10, 50px);
+            grid-template-rows: repeat(10, 50px);
+            gap: 1px;
+            width: 500px;
+            height: 500px;
+            border: 1px solid black;
+            background-color: #ddd;
+            margin-bottom: 20px;
+        }
+        .cell {
+            background-color: white;
+            border: 1px solid #ddd;
+            position: relative;
+        }
+        .block {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+        }
+        .block.black {
+            background-color: black;
+        }
+        .block.green {
+            background-color: green;
+        }
+        .block.spawn-marker {
+            background-color: blue;
+        }
+        footer{
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Fase Criada</h1>
+    <div id="container">
+        <!-- Células do campo de jogo -->
+        <!-- Usaremos JavaScript para adicionar blocos aqui -->
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const container = document.getElementById('container');
+            const blocksData = JSON.parse(localStorage.getItem('blocksData'));
+
+            // Renderiza os blocos na grade
+            blocksData.forEach(blockData => {
+                const cell = container.rows[blockData.position.y].cells[blockData.position.x];
+                const block = document.createElement('div');
+                block.classList.add('block', blockData.type);
+                cell.appendChild(block);
+            });
+        });
+    </script>
+    <footer>&copy;Feito por Thiago bel</footer>
+    <script type="module" src="script.js"></script>
+
+</body>
+</html>

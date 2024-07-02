@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>superlimon</title>
+    <link rel="shortcut icon" href="favicon-16x16.png" type="image/x-icon">
+    <link rel="stylesheet" href="style12.css">
+    <style>
+            img{
+      user-select: none;
+    }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <div id="container">
+            <img id="player" src="playerB.png" alt="Player" ondragstart="return false;">
+            <div class="block" style="top: 0%; left: 12.5%;"></div>
+            <div class="block" style="top: 10%; left: 12.5%;"></div>
+            <div class="block" style="top: 20%; left: 12.5%;"></div>
+            <div class="block" style="top: 30%; left: 12.5%;"></div>
+            <div class="block" style="top: 40%; left: 12.5%;"></div>
+            <div class="block" style="top: 50%; left: 12.5%;"></div>
+            <div class="block" style="top: 60%; left: 12.5%;"></div>
+            <div class="block" style="top: 70%; left: 12.5%;"></div>
+            <div class="block" style="top: 20%; left: 37.5%;"></div>
+            <div class="block" style="top: 30%; left: 37.5%;"></div>
+            <div class="block" style="top: 40%; left: 37.5%;"></div>
+            <div class="block" style="top: 50%; left: 37.5%;"></div>
+            <div class="block" style="top: 60%; left: 37.5%;"></div>
+            <div class="block" style="top: 70%; left: 37.5%;"></div>
+            <div class="block" style="top: 80%; left: 37.5%;"></div>
+            <div class="block" style="top: 90%; left: 37.5%;"></div>
+            <div class="block" style="top: 0%; left:  60%;"></div>
+            <div class="block" style="top: 10%; left: 60%;"></div>
+            <div class="block" style="top: 20%; left: 60%;"></div>
+            <div class="block" style="top: 30%; left: 60%;"></div>
+            <div class="block" style="top: 40%; left: 60%;"></div>
+            <div class="block" style="top: 50%; left: 60%;"></div>
+            <div class="block" style="top: 60%; left: 60%;"></div>
+            <div class="block" style="top: 70%; left: 60%;"></div>
+            <div class="block" style="top: 20%; left: 80%;"></div>
+            <div class="block" style="top: 30%; left: 80%;"></div>
+            <div class="block" style="top: 40%; left: 80%;"></div>
+            <div class="block" style="top: 50%; left: 80%;"></div>
+            <div class="block" style="top: 60%; left: 80%;"></div>
+            <div class="block" style="top: 70%; left: 80%;"></div>
+            <div class="block" style="top: 80%; left: 80%;"></div>
+            <div class="block" style="top: 90%; left: 80%;"></div>
+            <div id="endBlock"></div>
+            <!-- Adicione mais blocos conforme necessário -->
+        </div>
+        <div class="controls">
+            <button id="up">↑</button>
+            <div class="control-row">
+                <button id="left">←</button>
+                <button id="down">↓</button>
+                <button id="right">→</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const player = document.getElementById('player');
+        const container = document.getElementById('container');
+        const blocks = document.querySelectorAll('.block');
+        const endBlock = document.getElementById('endBlock');
+        const step = 5; // Número de pixels a mover por intervalo
+        const interval = 10; // Tempo de intervalo em milissegundos
+        const minDistance = 50; // Distância mínima dos blocos
+
+        let keysPressed = {};
+        let moveInterval = null;
+
+        const checkCollisionWithEndBlock = () => {
+            const playerRect = player.getBoundingClientRect();
+            const endBlockRect = endBlock.getBoundingClientRect();
+
+            return !(
+                playerRect.top > endBlockRect.bottom ||
+                playerRect.bottom < endBlockRect.top ||
+                playerRect.left > endBlockRect.right ||
+                playerRect.right < endBlockRect.left
+            );
+        };
+
+        const isColliding = (rect1, rect2) => {
+            return !(
+                rect1.top > rect2.bottom ||
+                rect1.bottom < rect2.top ||
+                rect1.left > rect2.right ||
+                rect1.right < rect2.left
+            );
+        };
+
+        const movePlayer = () => {
+            let top = parseInt(player.style.top) || 0;
+            let left = parseInt(player.style.left) || 0;
+
+            let newTop = top;
+            let newLeft = left;
+
+            // Calcular a nova posição do jogador
+            if (keysPressed['w'] || keysPressed['W'] || keysPressed['ArrowUp']) {
+                newTop = Math.max(newTop - step, 0);
+            }
+            if (keysPressed['a'] || keysPressed['A'] || keysPressed['ArrowLeft']) {
+                newLeft = Math.max(newLeft - step, 0);
+            }
+            if (keysPressed['s'] || keysPressed['S'] || keysPressed['ArrowDown']) {
+                newTop = Math.min(newTop + step, container.clientHeight - player.clientHeight);
+            }
+            if (keysPressed['d'] || keysPressed['D'] || keysPressed['ArrowRight']) {
+                newLeft = Math.min(newLeft + step, container.clientWidth - player.clientWidth);
+            }
+
+            // Temporariamente mover o jogador para a nova posição
+            player.style.top = newTop + 'px';
+            player.style.left = newLeft + 'px';
+
+            // Verificar colisão com blocos
+            let collision = false;
+            blocks.forEach(block => {
+                const blockRect = block.getBoundingClientRect();
+                const playerRect = player.getBoundingClientRect();
+
+                if (isColliding(playerRect, blockRect)) {
+                    collision = true;
+                    if (keysPressed['w'] || keysPressed['W'] || keysPressed['ArrowUp']) {
+                        newTop = blockRect.bottom;
+                    }
+                    if (keysPressed['a'] || keysPressed['A'] || keysPressed['ArrowLeft']) {
+                        newLeft = blockRect.right;
+                    }
+                    if (keysPressed['s'] || keysPressed['S'] || keysPressed['ArrowDown']) {
+                        newTop = blockRect.top - player.clientHeight;
+                    }
+                    if (keysPressed['d'] || keysPressed['D'] || keysPressed['ArrowRight']) {
+                        newLeft = blockRect.left - player.clientWidth;
+                    }
+                }
+            });
+
+            // Reverter a posição do jogador se houver colisão
+            if (collision) {
+                player.style.top = top + 'px';
+                player.style.left = left + 'px';
+            } else {
+                player.style.top = newTop + 'px';
+                player.style.left = newLeft + 'px';
+            }
+
+            // Verificar colisão com o bloco final
+            if (checkCollisionWithEndBlock()) {
+                window.location.href = "fim.html";
+            }
+        };
+
+        const startMoving = () => {
+            if (!moveInterval) {
+                moveInterval = setInterval(movePlayer, interval);
+            }
+        };
+
+        const stopMoving = () => {
+            clearInterval(moveInterval);
+            moveInterval = null;
+        };
+
+        document.addEventListener('keydown', (event) => {
+            keysPressed[event.key] = true;
+            startMoving();
+        });
+
+        document.addEventListener('keyup', (event) => {
+            delete keysPressed[event.key];
+            if (Object.keys(keysPressed).length === 0) {
+                stopMoving();
+            }
+        });
+
+        const addMobileControls = (buttonId, key) => {
+            const button = document.getElementById(buttonId);
+            button.addEventListener('mousedown', () => {
+                keysPressed[key] = true;
+                startMoving();
+            });
+            button.addEventListener('mouseup', () => {
+                delete keysPressed[key];
+                if (Object.keys(keysPressed).length === 0) {
+                    stopMoving();
+                }
+            });
+            button.addEventListener('touchstart', (event) => {
+                event.preventDefault(); // Prevenir comportamento padrão do toque
+                keysPressed[key] = true;
+                startMoving();
+            });
+            button.addEventListener('touchend', (event) => {
+                event.preventDefault(); // Prevenir comportamento padrão do toque
+                delete keysPressed[key];
+                if (Object.keys(keysPressed).length === 0) {
+                    stopMoving();
+                }
+            });
+        };
+
+        addMobileControls('up', 'ArrowUp');
+        addMobileControls('down', 'ArrowDown');
+        addMobileControls('left', 'ArrowLeft');
+        addMobileControls('right', 'ArrowRight');
+    </script>
+    <footer>&copy;Feito por Thiago bel</footer>
+    <script type="module" src="script.js"></script>
+    <script type="module" src="NOMOBILE.js"></script>
+</body>
+</html>

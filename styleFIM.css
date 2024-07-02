@@ -1,0 +1,327 @@
+body{
+    user-select: none;
+}
+#secretInput {
+    display: none;
+}
+img{
+    user-select: none;
+    cursor: default;
+}
+img:hover{
+cursor: default;
+}
+footer{
+    user-select: text;
+}
+.easteregg{
+    display: none;
+}
+
+.mapas{
+    background-color: #1d1d1d8e;
+    border-radius: 0.3vh;
+    width: auto;
+    height: 100vh;
+    margin: auto;
+    width: 100%;
+    overflow: auto;
+    max-height: 500px;
+}
+.overlay{
+    background-color: aqua;
+}
+.mapas::-webkit-scrollbar {
+    width: 20px;
+}
+.mapas::-webkit-scrollbar-track {
+    background: rgb(63, 63, 63);
+}
+.mapas::-webkit-scrollbar-track:hover {
+    cursor: pointer;
+}
+.mapas::-webkit-scrollbar-thumb {
+    background-color: rgb(148, 163, 14);
+    border-radius: 6px;
+    border: 3px solid rgb(36, 94, 21);
+    cursor: grab;
+}
+.mapas::-webkit-scrollbar-thumb:active {
+    cursor: grabbing;
+}
+/* Estilos para o popup */
+.popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgb(49, 49, 49);
+    padding: 40px;
+    border: 2px solid #767676;
+    border-radius: 2.3vh;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    display: none; /* Inicialmente escondido */
+    color: azure;
+}
+.popup:hover {
+    cursor: wait;
+}
+
+
+
+
+
+*{
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+}
+body{
+background-image: url(verde-Photoroom.png);
+background-size: cover;
+background-repeat: no-repeat;
+background-attachment: fixed;
+}
+.parte{
+text-decoration: none;
+}
+input{
+background-color: rgb(202, 202, 202);
+color: black;
+transition: transform 0.2s ease-in-out;
+border: 0;
+font-size: 5vh;
+padding-top: 3vh;
+padding-bottom: 3vh;
+border-radius: 0.5vh;
+}
+input:hover{
+background-color: rgb(142, 142, 142);
+transform: translateY(-0.5vh);
+cursor: pointer;
+text-decoration: underline;
+}
+input:active{
+background-color: rgb(71, 71, 71);
+cursor: wait;
+transform: scale(0.5);
+}
+.partee:hover{
+cursor: pointer;
+}
+.partee:active{
+cursor: wait;
+}
+.sims, .sims2{
+display: flex;
+justify-content: space-around;
+margin-block: 1vh;
+}
+footer{
+text-align: center;
+}
+a{
+text-decoration: none;
+}
+.secreto{
+background-color: brown;
+}
+.secreto:HOVER{
+background-color: black;
+}
+.most{
+color: rgb(234, 255, 0);
+text-align: center;
+}
+
+
+
+/*nav*/
+nav{
+background-color: black;
+}
+.simaall{
+display: flex;
+justify-content: space-between;
+}
+.log{
+color: aliceblue;
+font-size: 10vh;
+user-select: none;
+}
+.sima{
+display: flex;
+}
+.acd{
+color: aliceblue;
+}
+.acd2{
+background-color: red;
+}
+/*config*/
+.overlay {
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 0;
+background-color: rgba(249, 249, 249, 0.5);
+overflow: hidden;
+transition: height 0.5s ease-out;
+display: flex;
+align-items: center;
+justify-content: center;
+}
+
+.overlay.open {
+height: 100%;
+}
+
+.overlay .content {
+background-color: rgb(0, 0, 0);
+padding: 20px;
+max-width: 80%;
+text-align: center;
+border-radius: 10px;
+position: relative;
+}
+
+.overlay .content h1, .overlay .content p {
+text-align: justify;
+margin-bottom: 10px;
+color: white; /* Cor do texto no overlay */
+}
+
+.overlay .content img {
+display: block;
+margin: 0 auto;
+max-width: 100%;
+height: auto;
+}
+
+.overlay .closeButton {
+position: absolute;
+top: 10px;
+right: 10px;
+background-color: rgba(0, 0, 0, 0.5);
+color: white;
+border: none;
+padding: 5px 10px;
+border-radius: 5px;
+cursor: pointer;
+}
+/* Estilo específico para o overlay de Ajuda */
+#helpOverlay .content {
+background-color: rgb(43, 107, 189); /* Cor de fundo azul */
+}
+
+#helpOverlay .content h1 {
+color: white; /* Cor do título em branco */
+}
+
+#helpOverlay .content p {
+color: white; /* Cor do texto em branco */
+}
+
+/* Estilo dos botões Novidades, Outro e Ajuda */
+.top-right-buttons button {
+margin-left: 10px;
+}
+
+.nov, .ajuda, .outro {
+background-color: rgb(255, 0, 0);
+color: aliceblue;
+border: 0;
+padding: 8px 16px;
+cursor: pointer;
+transition: transform 0.3s ease-in-out;
+}
+
+.nov:hover, .ajuda:hover, .outro:hover {
+background-color: rgb(108, 0, 0);
+}
+
+.nov:active, .ajuda:active, .outro:active {
+transform: scale(0.95);
+}
+
+/* Estilo específico para o overlay "Outro" */
+#outroOverlay .content {
+background-color: rgb(255, 255, 255); /* Cor de fundo amarelo */
+}
+
+#outroOverlay .content h1 {
+color: black; /* Cor do título em preto */
+}
+
+#outroOverlay .content p {
+color: black; /* Cor do texto em preto */
+}
+.pDtelefone{
+display: none;
+color: rgb(88, 49, 49);
+}
+.pDtelefone{
+display: block;
+}
+@media (min-width: 700px) {
+    button{
+    scale: 0.7;
+    }
+    .log{
+    font-size: 200%;
+    }
+    .logoo{
+    width: 10vh;
+    }
+    .mapas{
+        scale: 0.5;
+    }
+    @media (max-width: 700px) {
+        button{
+        scale: 0.7;
+        }
+        .log{
+        font-size: 200%;
+        }
+        .logoo{
+        width: 10vh;
+        }
+        .mapas{
+            scale: 0.1;
+        }
+    }
+    }
+img{
+user-select: none;
+}
+.aaaaa{
+text-decoration: none;
+}
+.aaaaa:hover{
+text-decoration: underline;
+}
+.pdoajuda::selection{
+background-color: #ffffff; /* Cor de fundo da seleção */
+color: #000000;
+}
+.ajuda, .nov, .outro{
+background-color: rgb(255, 0, 0);
+color: aliceblue;
+border: 0;
+transition: transform 0.3s ease-in-out;
+}
+.ajuda:hover, .nov:hover, .outro:hover{
+background-color: rgb(108, 0, 0);
+}
+.nov:hover, .outro:hover{
+cursor: pointer;
+}
+.ajuda:hover{
+cursor: help;
+}
+.ajuda:active, .nov:active, .outro:active{
+transform: scale(0.5);
+cursor: wait;
+}

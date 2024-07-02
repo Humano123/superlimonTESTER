@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DEV TEST</title>
+    <style>
+        #container {
+            display: grid;
+            grid-template-columns: repeat(10, 50px);
+            grid-template-rows: repeat(10, 50px);
+            gap: 1px;
+            width: 500px;
+            height: 500px;
+            border: 1px solid black;
+            background-color: #ddd;
+            margin-bottom: 20px;
+        }
+        .cell {
+            background-color: white;
+            border: 1px solid #ddd;
+            position: relative;
+        }
+        .block {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+        }
+        .block.black {
+            background-color: black;
+        }
+        .block.green {
+            background-color: green;
+        }
+        .block.spawn-marker {
+            background-color: blue;
+        }
+        footer{
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Criar Fase</h1>
+    <div id="container">
+        <!-- Células do campo de jogo -->
+        <!-- Usaremos JavaScript para adicionar blocos aqui -->
+    </div>
+
+    <div id="sidebar">
+        <h2>Colocar Blocos</h2>
+        <input type="radio" name="blockType" value="black" id="blackBlock" checked>
+        <label for="blackBlock">Bloco Preto</label><br>
+        <input type="radio" name="blockType" value="green" id="greenBlock">
+        <label for="greenBlock">Finalização Verde</label><br>
+        <input type="radio" name="blockType" value="spawn" id="spawnBlock">
+        <label for="spawnBlock">Spawn</label><br>
+        <!-- Botão para testar a fase -->
+        <button id="testButton">Testar Fase</button>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const container = document.getElementById('container');
+            const cells = [];
+            const blocksData = [];
+
+            // Cria células do campo de jogo
+            for (let i = 0; i < 10; i++) {
+                for (let j = 0; j < 10; j++) {
+                    const cell = document.createElement('div');
+                    cell.classList.add('cell');
+                    container.appendChild(cell);
+                    cells.push(cell);
+                }
+            }
+
+            // Adiciona um evento de clique para cada célula do campo de jogo
+            cells.forEach((cell, index) => {
+                cell.addEventListener('click', function() {
+                    const selectedBlock = document.querySelector('input[name="blockType"]:checked').value;
+                    const blockData = { position: { x: index % 10, y: Math.floor(index / 10) }, type: selectedBlock };
+                    const existingBlock = cell.querySelector('.block');
+                    
+                    if (existingBlock) {
+                        existingBlock.remove();
+                    }
+
+                    if (selectedBlock === 'spawn') {
+                        const existingSpawnMarker = container.querySelector('.spawn-marker');
+                        if (existingSpawnMarker) {
+                            existingSpawnMarker.remove();
+                        }
+                        const spawnMarker = document.createElement('div');
+                        spawnMarker.classList.add('block', 'spawn-marker');
+                        cell.appendChild(spawnMarker);
+                    } else if (selectedBlock !== '') {
+                        const block = document.createElement('div');
+                        block.classList.add('block', selectedBlock);
+                        cell.appendChild(block);
+                    }
+
+                    // Atualiza os dados dos blocos
+                    const existingBlockDataIndex = blocksData.findIndex(data => data.position.x === blockData.position.x && data.position.y === blockData.position.y);
+                    if (existingBlockDataIndex !== -1) {
+                        blocksData.splice(existingBlockDataIndex, 1);
+                    }
+                    blocksData.push(blockData);
+                });
+            });
+
+            // Adiciona um evento de clique para o botão de teste
+            const testButton = document.getElementById('testButton');
+            testButton.addEventListener('click', function() {
+                localStorage.setItem('blocksData', JSON.stringify(blocksData));
+                window.open('teste_fase.html', '_blank');
+            });
+        });
+    </script>
+<footer>&copy;Feito por Thiago bel</footer>
+<script type="module" src="script.js"></script>
+<script type="module" src="NOMOBILE.js"></script>
+
+</body>
+</html>

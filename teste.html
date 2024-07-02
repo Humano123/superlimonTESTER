@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DEV TEST</title>
+    <style>
+        #container {
+            position: relative;
+            width: 800px;
+            height: 600px;
+            border: 1px solid #000;
+            background-color: #ddd;
+        }
+        #player {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 50px;
+            height: 50px;
+        }
+        .block {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background-color: #000;
+        }
+        #endBlock {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background-color: green;
+            bottom: 0;
+            right: 0;
+        }
+        .controls {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-left: 20px;
+        }
+        .controls button {
+            width: 50px;
+            height: 50px;
+            margin: 5px;
+        }
+        .control-row {
+            display: flex;
+        }
+        @media (max-width: 1300px) {
+            #container {
+                width: 400px;
+                height: 300px;
+            }
+            .controls button {
+                width: 30px;
+                height: 30px;
+            }
+        }
+        footer{
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div style="display: flex; justify-content: center; align-items: center;">
+        <div id="container">
+            <img id="player" src="playerB.png" alt="Player">
+            <div class="block" style="top: 100px; left: 100px;"></div>
+            <div class="block" style="top: 200px; left: 300px;"></div>
+            <div id="endBlock"></div>
+        </div>
+        <div class="controls">
+            <button id="up">↑</button>
+            <div class="control-row">
+                <button id="left">←</button>
+                <button id="down">↓</button>
+                <button id="right">→</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const player = document.getElementById('player');
+        const container = document.getElementById('container');
+        const blocks = document.querySelectorAll('.block');
+        const endBlock = document.getElementById('endBlock');
+        const step = 5; // Número de pixels a mover por intervalo
+        const interval = 10; // Tempo de intervalo em milissegundos
+
+        let keysPressed = {};
+        let moveInterval = null;
+
+        const checkCollisionWithEndBlock = () => {
+            const playerRect = player.getBoundingClientRect();
+            const endBlockRect = endBlock.getBoundingClientRect();
+
+            return !(
+                playerRect.top > endBlockRect.bottom ||
+                playerRect.bottom < endBlockRect.top ||
+                playerRect.left > endBlockRect.right ||
+                playerRect.right < endBlockRect.left
+            );
+        };
+
+        const movePlayer = () => {
+            let top = parseInt(player.style.top) || 0;
+            let left = parseInt(player.style.left) || 0;
+
+            if (keysPressed['w'] || keysPressed['W'] || keysPressed['ArrowUp']) {
+                top = Math.max(top - step, 0);
+            }
+            if (keysPressed['a'] || keysPressed['A'] || keysPressed['ArrowLeft']) {
+                left = Math.max(left - step, 0);
+            }
+            if (keysPressed['s'] || keysPressed['S'] || keysPressed['ArrowDown']) {
+                top = Math.min(container.clientHeight - player.clientHeight, top + step);
+            }
+            if (keysPressed['d'] || keysPressed['D'] || keysPressed['ArrowRight']) {
+                left = Math.min(container.clientWidth - player.clientWidth, left + step);
+            }
+
+            player.style.top = top + 'px';
+            player.style.left = left + 'px';
+
+            if (checkCollisionWithEndBlock()) {
+                window.location.href = "fim.html";
+            }
+        };
+
+        const startMoving = () => {
+            if (!moveInterval) {
+                moveInterval = setInterval(movePlayer, interval);
+            }
+        };
+
+        const stopMoving = () => {
+            clearInterval(moveInterval);
+            moveInterval = null;
+        };
+
+        document.addEventListener('keydown', (event) => {
+            keysPressed[event.key] = true;
+            startMoving();
+        });
+
+        document.addEventListener('keyup', (event) => {
+            delete keysPressed[event.key];
+            if (Object.keys(keysPressed).length === 0) {
+                stopMoving();
+            }
+        });
+
+        const addMobileControls = (buttonId, key) => {
+            const button = document.getElementById(buttonId);
+            button.addEventListener('mousedown', () => {
+                keysPressed[key] = true;
+                startMoving();
+            });
+            button.addEventListener('mouseup', () => {
+                delete keysPressed[key];
+                if (Object.keys(keysPressed).length === 0) {
+                    stopMoving();
+                }
+            });
+            button.addEventListener('touchstart', () => {
+                keysPressed[key] = true;
+                startMoving();
+            });
+            button.addEventListener('touchend', () => {
+                delete keysPressed[key];
+                if (Object.keys(keysPressed).length === 0) {
+                    stopMoving();
+                }
+            });
+        };
+
+        addMobileControls('up', 'ArrowUp');
+        addMobileControls('down', 'ArrowDown');
+        addMobileControls('left', 'ArrowLeft');
+        addMobileControls('right', 'ArrowRight');
+    </script>
+    <footer>&copy;Feito por Thiago bel</footer>
+    <script type="module" src="script.js"></script>
+    <script type="module" src="NOMOBILE.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head> 
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>superlimon</title>
+  <link rel="shortcut icon" href="favicon-16x16.png" type="image/x-icon">
+  <link rel="stylesheet" href="styleMENU.css"> <!-- Adicionei o estilo para o overlay -->
+  <style>
+    /* Estilo geral do overlay */
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 0;
+      background-color: rgba(249, 249, 249, 0.5);
+      overflow: hidden;
+      transition: height 0.5s ease-out;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .overlay.open {
+      height: 100%;
+    }
+
+    .overlay .content {
+      background-color: rgb(0, 0, 0);
+      padding: 20px;
+      max-width: 80%;
+      text-align: center;
+      border-radius: 10px;
+      position: relative;
+    }
+
+    .overlay .content h1, .overlay .content p {
+      text-align: justify;
+      margin-bottom: 10px;
+      color: white; /* Cor do texto no overlay */
+    }
+
+    .overlay .content img {
+      display: block;
+      margin: 0 auto;
+      max-width: 100%;
+      height: auto;
+    }
+
+    .overlay .closeButton {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background-color: rgba(0, 0, 0, 0.5);
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    /* Estilo específico para o overlay de Ajuda */
+    #helpOverlay .content {
+      background-color: rgb(43, 107, 189); /* Cor de fundo azul */
+    }
+
+    #helpOverlay .content h1 {
+      color: white; /* Cor do título em branco */
+    }
+
+    #helpOverlay .content p {
+      color: white; /* Cor do texto em branco */
+    }
+
+    /* Estilo dos botões Novidades, Outro e Ajuda */
+    .top-right-buttons button {
+      margin-left: 10px;
+    }
+
+    .nov, .ajuda, .outro {
+      background-color: rgb(255, 0, 0);
+      color: aliceblue;
+      border: 0;
+      padding: 8px 16px;
+      cursor: pointer;
+      transition: transform 0.3s ease-in-out;
+    }
+
+    .nov:hover, .ajuda:hover, .outro:hover {
+      background-color: rgb(108, 0, 0);
+    }
+
+    .nov:active, .ajuda:active, .outro:active {
+      transform: scale(0.95);
+    }
+
+    /* Estilo específico para o overlay "Outro" */
+    #outroOverlay .content {
+      background-color: rgb(255, 255, 255); /* Cor de fundo amarelo */
+    }
+
+    #outroOverlay .content h1 {
+      color: black; /* Cor do título em preto */
+    }
+
+    #outroOverlay .content p {
+      color: black; /* Cor do texto em preto */
+    }
+    button{
+      scale: 1;
+    }
+    .pDtelefone{
+      display: none;
+      color: rgb(88, 49, 49);
+    }
+    @media (max-width: 1000px) {
+      button{
+        scale: 0.8;
+      }
+      .pDtelefone{
+        display: block;
+      }
+    }
+
+    @media (max-width: 700px) {
+      button{
+        scale: 0.7;
+      }
+      .log{
+        font-size: 200%;
+      }
+      .logoo{
+        width: 10vh;
+      }
+    }
+    img{
+      user-select: none;
+    }
+    .aaaaa{
+      text-decoration: none;
+    }
+    .aaaaa:hover{
+      text-decoration: underline;
+    }
+    .pdoajuda::selection{
+      background-color: #ffffff; /* Cor de fundo da seleção */
+      color: #000000;
+    }
+    .acd3{
+      color: green;
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="simaall">
+      <div class="sima">
+        <img class="logoo" src="logo-Photoroom.png" width="100vh" ondragstart="return false;">
+        <h1 class="log">superlimon</h1>
+      </div>
+      <p class="acd">Versão: <b class="acd2">6.5</b><b class="acd3">Teste do desenvolvidor</b></p>
+      <div class="top-right-buttons">
+        <button class="nov" id="showNovidades">Novidades</button>
+        <button class="outro" id="showOutro">Discord</button>
+        <button class="ajuda" id="showAjuda">Ajuda</button>
+      </div>
+    </div>
+  </nav>
+  <section class="sim">
+    <h1 class="dosim">superlimon</h1> <br>
+    <p class="p">Bem-vindo ao jogo superlimon, um jogo onde você precisa enfrentar desafios para chegar na área verde para conseguir ganhar a fase!</p>
+  </section>
+  <div class="div">
+    <p class="pz">NÃO USE <b class="b">DEVTOOLS</b>, CASO VOCÊ USE, VOCÊ NÃO VAI PODER ENTRAR MAIS NO SUPERLIMON NOVAMENTE</p>
+  </div>
+  <p class="pDtelefone">Se você estiver usando telefone, este jogo terá muitos bugs (muitos mesmos).</p>
+  <a href="escolha.html"><input class="input" type="button" value="Jogar"></a>
+  <footer>&copy;Feito por Thiago bel</footer>
+
+  <!-- Overlay de Novidades -->
+  <div id="novidadesOverlay" class="overlay">
+    <div class="content">
+      <button class="closeButton" id="closeNovidades">Fechar</button>
+      <h1 class="asad">Novidades!</h1> 
+          <br>
+          <br>
+          <p class="Verde">1. O CRIADOR ENLOUQUECEU! MAIS 6 FASES PARA O JOGO! elas são: (cegueira impossivel, Cegueira mestreado impossivel, Lanterna, Lanterna impossivel, Lanterna mastreado impossivel) e a Lanterna, Lanterna impossivel, Lanterna mastreado impossivel tem mecanicas novas! que é que se você passar o mouse por cima dos blocos, irá revelar! (lanterna)...</p>
+          <br>
+          <p class="Verde">2. Ui da parte de escolher os mapas melhorou (ficou lindo demais)...</p>
+          <br>
+          <p class="Verde">3. A tela de carregamento está mais rapido (De 3.5 segundos para 0.2 segundos)...</p>
+          <br>
+          <p class="Verde">4. Alguns bugs resolvidos...</p>
+      <video width="320" height="240" autoplay loop muted playsinline ondragstart="return false">
+        <source src="GIRAGIRAGIRA.mp4" type="video/mp4">
+        Seu navegador não suporta vídeo HTML5.
+      </video>
+    </div>
+  </div>
+
+  <!-- Overlay "Outro" -->
+<!-- Overlay "Outro" -->
+<div id="outroOverlay" class="overlay">
+  <div class="content">
+    <button class="closeButton" id="closeOutro">Fechar</button>
+    <h1 class="asad">Servidor do discord</h1>
+    <p>Link do discord</p>
+    <a class="aaaaa" href="https://discord.gg/EamZ94ChJb" target="_blank" rel="noopener noreferrer">https://discord.gg/EamZ94ChJb</a>
+  </div>
+</div>
+
+
+  <!-- Overlay de Ajuda -->
+  <div id="helpOverlay" class="overlay">
+    <div class="content">
+      <button class="closeButton" id="closeAjuda">Fechar</button>
+      <h1 class="asad">Ajuda</h1>
+      <p class="pdoajuda">Aqui você pode encontrar informações úteis para jogar o Superlimon.</p>
+      <p class="pdoajuda">Para se movimentar, use as teclas WASD ou as setas que se localiza em baixo do shift maior</p>
+      <p class="pdoajuda">A versão 3.0 para cima não funciona para mobile por conta de bugs, por isso, é impossivel jogar</p>
+    </div>
+  </div>
+  <script type="module" src="script.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const showNovidadesButton = document.getElementById('showNovidades');
+      const showOutroButton = document.getElementById('showOutro');
+      const showAjudaButton = document.getElementById('showAjuda');
+      const novidadesOverlay = document.getElementById('novidadesOverlay');
+      const outroOverlay = document.getElementById('outroOverlay');
+      const helpOverlay = document.getElementById('helpOverlay');
+      const closeNovidadesButton = document.getElementById('closeNovidades');
+      const closeOutroButton = document.getElementById('closeOutro');
+      const closeAjudaButton = document.getElementById('closeAjuda');
+
+      showNovidadesButton.addEventListener('click', function() {
+        novidadesOverlay.classList.add('open');
+      });
+
+      showOutroButton.addEventListener('click', function() {
+        outroOverlay.classList.add('open');
+      });
+
+      showAjudaButton.addEventListener('click', function() {
+        helpOverlay.classList.add('open');
+      });
+
+      closeNovidadesButton.addEventListener('click', function() {
+        novidadesOverlay.classList.remove('open');
+      });
+
+      closeOutroButton.addEventListener('click', function() {
+        outroOverlay.classList.remove('open');
+      });
+
+      closeAjudaButton.addEventListener('click', function() {
+        helpOverlay.classList.remove('open');
+      });
+
+      novidadesOverlay.addEventListener('click', function(event) {
+        if (event.target === novidadesOverlay) {
+          novidadesOverlay.classList.remove('open');
+        }
+      });
+
+      outroOverlay.addEventListener('click', function(event) {
+        if (event.target === outroOverlay) {
+          outroOverlay.classList.remove('open');
+        }
+      });
+
+      helpOverlay.addEventListener('click', function(event) {
+        if (event.target === helpOverlay) {
+          helpOverlay.classList.remove('open');
+        }
+      });
+    });
+  </script>
+</body>
+</html>

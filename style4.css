@@ -1,0 +1,94 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f0f0f0; /* Opcional: fundo da página */
+}
+
+.wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#container {
+    position: relative;
+    width: 80vmin; /* Proporcional ao tamanho da tela */
+    height: 70vmin; /* Proporcional ao tamanho da tela */
+    border: 1px solid #000;
+    background-color: #000;
+    z-index: 0;
+}
+
+#player {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 3.75vmin; /* Proporcional ao tamanho do container */
+    height: 3.75vmin; /* Proporcional ao tamanho do container */
+    z-index: 2;
+    opacity: 0.4;
+}
+
+.block {
+    position: absolute;
+    width: 6.25vmin; /* Proporcional ao tamanho do container */
+    height: 6.25vmin; /* Proporcional ao tamanho do container */
+    background-color: #333423;
+    z-index: 1;
+}
+
+#endBlock {
+    position: absolute;
+    width: 6.25vmin; /* Proporcional ao tamanho do container */
+    height: 6.25vmin; /* Proporcional ao tamanho do container */
+    background-color: green;
+    bottom: 0;
+    right: 0;
+}
+
+.controls {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: 2vmin; /* Proporcional ao tamanho do container */
+}
+
+.controls button {
+    width: 6.25vmin; /* Proporcional ao tamanho do container */
+    height: 6.25vmin; /* Proporcional ao tamanho do container */
+    margin: 0.625vmin; /* Proporcional ao tamanho do container */
+    opacity: 0;
+}
+
+.control-row {
+    display: flex;
+}
+
+@media (max-width: 1300px) {
+    #container {
+        width: 40vmin; /* Proporcional ao tamanho da tela */
+        height: 35vmin; /* Proporcional ao tamanho da tela */
+    }
+
+    #player, .block, #endBlock {
+        width: 3.125vmin; /* Proporcional ao tamanho do container */
+        height: 3.125vmin; /* Proporcional ao tamanho do container */
+    }
+
+    .controls {
+        margin-left: 1vmin; /* Proporcional ao tamanho do container */
+    }
+
+    .controls button {
+        margin: 0.3125vmin; /* Proporcional ao tamanho do container */
+    }
+}
+
+footer {
+    text-align: center;
+}

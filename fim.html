@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>superlimon</title>
+    <link rel="shortcut icon" href="favicon-16x16.png" type="image/x-icon">
+    <link rel="stylesheet" href="styleFIM.css">
+</head>
+<body>
+    <img class="easteregg" src="senor.png" alt="senor" width="30" height="30" ondragstart="return false">
+    <nav>
+        <div class="simaall">
+          <div class="sima">
+            <img class="logoo" src="logo-Photoroom.png" width="100vh" ondragstart="return false;">
+            <h1 class="log">superlimon</h1>
+          </div>
+          <p class="acd">Versão: <b class="acd2">6.0</b></p>
+          <div class="top-right-buttons">
+            <button class="nov" id="showNovidades">Novidades</button>
+            <button class="outro" id="showOutro">Discord</button>
+            <button class="ajuda" id="showAjuda">Ajuda</button>
+          </div>
+        </div>
+      </nav>
+    <div class="mapas">
+        <h1 class="most">Mapas</h1>
+        <br>
+    <div class="sims">
+        <div class="partee"><a class="parte" href="jogo1.html"><input class="entrar" type="button" value="Mapa clássico"></a></div>
+        <div class="partee"><a class="parte" href="jogo2.html"><input class="entrar" type="button" value="Mapa clássico 2"></a></div>
+        <div class="partee"><a class="parte" href="jogo3.html"><input class="entrar" type="button" value="Mapa da casa"></a></div>
+    </div>
+    <br>
+    <div class="sims">
+        <div class="partee"><a class="parte" href="jogo4.html"><input class="entrar" type="button" value="Escuridão"></a></div>
+        <div class="partee"><a class="parte" href="jogo5.html"><input class="entrar" type="button" value="Cegueira"></a></div>
+        <div class="partee"><a class="parte" href="jogo6.html"><input class="entrar" type="button" value="Mestre"></a></div>
+    </div>
+    <br>
+    <div class="sims">
+        <div class="partee"><a class="parte" href="jogo7.html"><input class="entrar" type="button" value="Cegueira 2"></a></div>
+        <div class="partee"><a class="parte" href="jogo8.html"><input class="entrar" type="button" value="Oceano"></a></div>
+        <div class="partee"><a class="parte" href="jogo9.html"><input class="entrar" type="button" value="Espacial"></a></div>
+    </div>
+    <br>
+    <div class="sims">
+        <div class="partee"><a class="parte" href="jogo10.html"><input class="entrar" type="button" value="Cegueira 3"></a></div>
+        <div class="partee"><a class="parte" href="jogo11.html"><input class="entrar" type="button" value="Cegueira 4"></a></div>
+        <div class="partee"><a class="parte" href="jogo12.html"><input class="entrar" type="button" value="Lanterna"></a></div>
+    </div>
+    <br>
+    <div class="sims">
+        <div class="partee"><a class="parte" href="jogo13.html"><input class="entrar" type="button" value="Lanterna 2"></a></div>
+        <div class="partee"><a class="parte" href="jogo14.html"><input class="entrar" type="button" value="Lanterna 3"></a></div>
+        <div class="partee"><a class="parte" href="jogo15.html"><input class="entrar" type="button" value="Lanterna 4"></a></div>
+    </div>
+    <div class="sims"></div>
+</div>
+    <footer>&copy;Feito por Thiago bel</footer>
+
+    <!-- Popup -->
+    <div class="popup" id="popup">
+        <h1>Aguarde...</h1>
+    </div>
+    <div id="novidadesOverlay" class="overlay">
+        <div class="content">
+          <button class="closeButton" id="closeNovidades">Fechar</button>
+          <h1 class="asad">Novidades!</h1> 
+          <br>
+          <br>
+          <p class="Verde">1. O CRIADOR ENLOUQUECEU! MAIS 6 FASES PARA O JOGO! elas são: (cegueira impossivel, Cegueira mestreado impossivel, Lanterna, Lanterna impossivel, Lanterna mastreado impossivel) e a Lanterna, Lanterna impossivel, Lanterna mastreado impossivel tem mecanicas novas! que é que se você passar o mouse por cima dos blocos, irá revelar! (lanterna)...</p>
+          <br>
+          <p class="Verde">2. Ui da parte de escolher os mapas melhorou (ficou lindo demais)...</p>
+          <br>
+          <p class="Verde">3. A tela de carregamento está mais rapido (De 3.5 segundos para 0.2 segundos)...</p>
+          <br>
+          <p class="Verde">4. Alguns bugs resolvidos...</p>
+          <video width="320" height="240" autoplay loop muted playsinline ondragstart="return false">
+            <source src="GIRAGIRAGIRA.mp4" type="video/mp4">
+            Seu navegador não suporta vídeo HTML5.
+          </video>
+        </div>
+      </div>
+    
+      <!-- Overlay "Outro" -->
+    <!-- Overlay "Outro" -->
+    <div id="outroOverlay" class="overlay">
+      <div class="content">
+        <button class="closeButton" id="closeOutro">Fechar</button>
+        <h1 class="asad">Servidor do discord</h1>
+        <p>Link do discord</p>
+        <a class="aaaaa" href="https://discord.gg/EamZ94ChJb" target="_blank" rel="noopener noreferrer">https://discord.gg/EamZ94ChJb</a>
+      </div>
+    </div>
+    
+    
+      <!-- Overlay de Ajuda -->
+      <div id="helpOverlay" class="overlay">
+        <div class="content">
+          <button class="closeButton" id="closeAjuda">Fechar</button>
+          <h1 class="asad">Ajuda</h1>
+          <p class="pdoajuda">Aqui você pode encontrar informações úteis para jogar o Superlimon.</p>
+          <p class="pdoajuda">Para se movimentar, use as teclas WASD ou as setas que se localiza em baixo do shift maior</p>
+          <p class="pdoajuda">A versão 3.0 para cima não funciona para mobile por conta de bugs, por isso, é impossivel jogar</p>
+        </div>
+      </div>
+      <script type="module" src="script.js"></script>
+      <script>
+        document.addEventListener('DOMContentLoaded', function() {
+          const showNovidadesButton = document.getElementById('showNovidades');
+          const showOutroButton = document.getElementById('showOutro');
+          const showAjudaButton = document.getElementById('showAjuda');
+          const novidadesOverlay = document.getElementById('novidadesOverlay');
+          const outroOverlay = document.getElementById('outroOverlay');
+          const helpOverlay = document.getElementById('helpOverlay');
+          const closeNovidadesButton = document.getElementById('closeNovidades');
+          const closeOutroButton = document.getElementById('closeOutro');
+          const closeAjudaButton = document.getElementById('closeAjuda');
+    
+          showNovidadesButton.addEventListener('click', function() {
+            novidadesOverlay.classList.add('open');
+          });
+    
+          showOutroButton.addEventListener('click', function() {
+            outroOverlay.classList.add('open');
+          });
+    
+          showAjudaButton.addEventListener('click', function() {
+            helpOverlay.classList.add('open');
+          });
+    
+          closeNovidadesButton.addEventListener('click', function() {
+            novidadesOverlay.classList.remove('open');
+          });
+    
+          closeOutroButton.addEventListener('click', function() {
+            outroOverlay.classList.remove('open');
+          });
+    
+          closeAjudaButton.addEventListener('click', function() {
+            helpOverlay.classList.remove('open');
+          });
+    
+          novidadesOverlay.addEventListener('click', function(event) {
+            if (event.target === novidadesOverlay) {
+              novidadesOverlay.classList.remove('open');
+            }
+          });
+    
+          outroOverlay.addEventListener('click', function(event) {
+            if (event.target === outroOverlay) {
+              outroOverlay.classList.remove('open');
+            }
+          });
+    
+          helpOverlay.addEventListener('click', function(event) {
+            if (event.target === helpOverlay) {
+              helpOverlay.classList.remove('open');
+            }
+          });
+        });
+      </script>
+
+
+    <script>
+document.addEventListener('DOMContentLoaded', (event) => {
+    // Função para lidar com o clique nos links
+    const handleLinkClick = (event) => {
+        event.preventDefault(); // Prevenir o comportamento padrão de navegação
+        const url = event.currentTarget.href; // Obter o URL do link clicado
+
+        // Gerar um token único para validação
+        const token = generateToken();
+
+        // Mostrar o popup
+        const popup = document.getElementById('popup');
+        popup.style.display = 'block';
+
+        const loadingText = document.createElement('p');
+        loadingText.textContent = 'Carregando...';
+        popup.appendChild(loadingText);
+
+        // Barra de progresso
+        const progressBar = document.createElement('div');
+        progressBar.style.width = '0%';
+        progressBar.style.height = '10px';
+        progressBar.style.backgroundColor = '#4CAF50';
+        progressBar.style.marginTop = '10px';
+        popup.appendChild(progressBar);
+
+        // Imagem do senor
+        const senorImg = document.createElement('img');
+        senorImg.src = 'senor.png';
+        senorImg.alt = 'senor';
+        senorImg.width = 50;
+        senorImg.height = 50;
+        senorImg.style.cursor = 'pointer';
+        senorImg.style.transition = 'transform 0.3s ease-out'; // Transição para a animação de rotação
+        popup.appendChild(senorImg);
+
+        // Contador de cliques no senorImg
+        let clickCount = 0;
+
+        // Função para lidar com cliques no senorImg
+        const handleSenorClick = () => {
+            clickCount++;
+            if (clickCount === 123) {
+                window.location.href = `secreteGame.html?token=${token}`; // Redireciona para secreteGame.html com token na URL
+            }
+            // Girar mais rápido a cada clique
+            const currentRotation = parseFloat(getComputedStyle(senorImg).getPropertyValue('--rotation') || '0');
+            const newRotation = currentRotation + 90; // Aumenta 90 graus a cada clique
+            senorImg.style.setProperty('--rotation', `${newRotation}deg`);
+        };
+
+        // Adicionar evento de clique para senorImg
+        senorImg.addEventListener('click', handleSenorClick);
+
+        // Início da contagem de tempo
+        const startTime = performance.now();
+
+        // Função para atualizar a barra de progresso
+        const updateProgress = () => {
+            const currentTime = performance.now();
+            const elapsedTime = (currentTime - startTime) / 1000; // Tempo decorrido em segundos
+            progressBar.style.width = `${(elapsedTime / 0.2) * 100}%`; // 1.5 (3.5) segundos correspondem a 100% da barra
+            if (elapsedTime >= 0.2) {
+                clearInterval(progressInterval);
+                // Após o carregamento completo, redirecionar para o URL
+                window.location.href = url;
+            }
+        };
+
+        // Chamar updateProgress a cada 10ms (0.01 segundos)
+        const progressInterval = setInterval(updateProgress, 10);
+    };
+
+    // Adicionar evento de clique para cada link com a classe 'parte'
+    const links = document.querySelectorAll('.parte');
+    links.forEach(link => {
+        link.addEventListener('click', handleLinkClick);
+    });
+
+    // Função para gerar um token único
+    function generateToken() {
+        // Gera um número aleatório com base no timestamp atual
+        return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+    }
+});
+
+    </script>
+
+    <script type="module" src="script.js"></script>
+    <script type="module" src="NOMOBILE.js"></script>
+</body>
+</html>
